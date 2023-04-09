@@ -1,5 +1,5 @@
 {
-  description = "Flake to manage grub2 themes from vinceliuice";
+  description = "Flake to manage grub2 theme by happenslol, adapted from vinceliuice";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/master";
 
@@ -21,17 +21,16 @@
           name = "grub2-theme";
           src = "${self}";
           installPhase = ''
-            mkdir -p $out/grub/themes;
-            cp -a --no-preserve=ownership config/theme.txt $out/grub/themes/g2theme
-            cp -a --no-preserve=ownership common/*.png $out/grub/themes/g2theme
-            cp -a --no-preserve=ownership common/*.pf2 $out/grub/themes/g2theme
+            cp -a --no-preserve=ownership config/theme.txt $out
+            cp -a --no-preserve=ownership common/*.png $out
+            cp -a --no-preserve=ownership common/*.pf2 $out
 
-            cp -a --no-preserve=ownership assets/assets-${cfg.icon}/icons-2k $out/grub/themes/g2theme/icons
-            cp -a --no-preserve=ownership assets/assets-select/select-2k/*.png $out/grub/themes/g2theme
+            cp -a --no-preserve=ownership assets/assets-${cfg.icon}/icons-2k $out/icons
+            cp -a --no-preserve=ownership assets/assets-select/select-2k/*.png $out
 
             if [ ${pkgs.lib.trivial.boolToString hasBootMenuConfig} == "true" ]; then
-              sed -i ':again;$!N;$!b again; s/\+ boot_menu {[^}]*}//g' $out/grub/themes/g2theme/theme.txt;
-              cat << EOF >> $out/grub/themes/g2theme/theme.txt
+              sed -i ':again;$!N;$!b again; s/\+ boot_menu {[^}]*}//g' $out/theme.txt;
+              cat << EOF >> $out/theme.txt
               + boot_menu {
                 ${
               if cfg.bootMenuConfig == null
@@ -43,8 +42,8 @@
             fi;
 
             if [ ${pkgs.lib.trivial.boolToString hasTerminalConfig} == "true" ]; then
-              sed -i 's/^terminal-.*$//g' $out/grub/themes/g2theme/theme.txt
-              cat << EOF >> $out/grub/themes/g2theme/theme.txt
+              sed -i 's/^terminal-.*$//g' $out/theme.txt
+              cat << EOF >> $out/theme.txt
                 ${
               if cfg.terminalConfig == null
               then ""
@@ -105,7 +104,7 @@
           {
             environment.systemPackages = [grub2-theme];
             boot.loader.grub = {
-              theme = "${grub2-theme}/grub/themes/g2theme";
+              theme = "${grub2-theme}";
               gfxmodeEfi = "${cfg.resolution},auto";
               gfxmodeBios = "${cfg.resolution},auto";
               extraConfig = ''
