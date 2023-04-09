@@ -17,27 +17,33 @@
         hasBootMenuConfig = cfg.bootMenuConfig != null;
         hasTerminalConfig = cfg.terminalConfig != null;
 
+        bootMenuConfig =
+          if cfg.bootmenuconfig == null
+          then ""
+          else cfg.bootmenuconfig;
+
+        terminalConfig =
+          if cfg.terminalConfig == null
+          then ""
+          else cfg.terminalConfig;
+
         grub2-theme = pkgs.stdenv.mkDerivation {
           name = "grub2-theme";
           src = "${self}";
           installPhase = ''
             mkdir -p $out
-            cp -a --no-preserve=ownership config/theme.txt $out
-            cp -a --no-preserve=ownership common/*.png $out
-            cp -a --no-preserve=ownership common/*.pf2 $out
+            cp -a config/theme.txt $out
+            cp -a common/*.png $out
+            cp -a common/*.pf2 $out
 
-            cp -a --no-preserve=ownership assets/assets-${cfg.icon}/icons-2k $out/icons
-            cp -a --no-preserve=ownership assets/assets-select/select-2k/*.png $out
+            cp -a assets/assets-${cfg.icon}/icons-2k $out/icons
+            cp -a assets/assets-select/select-2k/*.png $out
 
             if [ ${pkgs.lib.trivial.boolToString hasBootMenuConfig} == "true" ]; then
-              sed -i ':again;$!N;$!b again; s/\+ boot_menu {[^}]*}//g' $out/theme.txt;
+              sed -i ':again;$!N;$!b again; s/\+ boot_menu {[^}]*}//g' $out/theme.txt
               cat << EOF >> $out/theme.txt
             + boot_menu {
-              ${
-              if cfg.bootMenuConfig == null
-              then ""
-              else cfg.bootMenuConfig
-            }
+              ${bootMenuConfig}
             }
             EOF
             fi;
@@ -45,11 +51,7 @@
             if [ ${pkgs.lib.trivial.boolToString hasTerminalConfig} == "true" ]; then
               sed -i 's/^terminal-.*$//g' $out/theme.txt
               cat << EOF >> $out/theme.txt
-                ${
-              if cfg.terminalConfig == null
-              then ""
-              else cfg.terminalConfig
-            }
+                ${terminalConfig}
             EOF
             fi;
           '';
