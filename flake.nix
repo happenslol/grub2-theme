@@ -26,7 +26,7 @@
             cp -a --no-preserve=ownership common/*.png $out/grub/themes/g2theme
             cp -a --no-preserve=ownership common/*.pf2 $out/grub/themes/g2theme
 
-            cp -a --no-preserve=ownership assets/assets-$icon/icons-2k $out/grub/themes/g2theme/icons
+            cp -a --no-preserve=ownership assets/assets-${cfg.icon}/icons-2k $out/grub/themes/g2theme/icons
             cp -a --no-preserve=ownership assets/assets-select/select-2k/*.png $out/grub/themes/g2theme
 
             if [ ${pkgs.lib.trivial.boolToString hasBootMenuConfig} == "true" ]; then
@@ -106,8 +106,8 @@
             environment.systemPackages = [grub2-theme];
             boot.loader.grub = {
               theme = "${grub2-theme}/grub/themes/${cfg.theme}";
-              gfxmodeEfi = "${resolution},auto";
-              gfxmodeBios = "${resolution},auto";
+              gfxmodeEfi = "${cfg.resolution},auto";
+              gfxmodeBios = "${cfg.resolution},auto";
               extraConfig = ''
                 insmod gfxterm
                 insmod png
