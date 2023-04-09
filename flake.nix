@@ -18,9 +18,9 @@
         hasTerminalConfig = cfg.terminalConfig != null;
 
         bootMenuConfig =
-          if cfg.bootmenuconfig == null
+          if cfg.bootMenuConfig == null
           then ""
-          else cfg.bootmenuconfig;
+          else cfg.bootMenuConfig;
 
         terminalConfig =
           if cfg.terminalConfig == null
