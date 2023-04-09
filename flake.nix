@@ -21,6 +21,7 @@
           name = "grub2-theme";
           src = "${self}";
           installPhase = ''
+            mkdir -p $out
             cp -a --no-preserve=ownership config/theme.txt $out
             cp -a --no-preserve=ownership common/*.png $out
             cp -a --no-preserve=ownership common/*.pf2 $out
