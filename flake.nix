@@ -32,13 +32,13 @@
             if [ ${pkgs.lib.trivial.boolToString hasBootMenuConfig} == "true" ]; then
               sed -i ':again;$!N;$!b again; s/\+ boot_menu {[^}]*}//g' $out/theme.txt;
               cat << EOF >> $out/theme.txt
-              + boot_menu {
-                ${
+            + boot_menu {
+              ${
               if cfg.bootMenuConfig == null
               then ""
               else cfg.bootMenuConfig
             }
-              }
+            }
             EOF
             fi;
 
@@ -50,7 +50,7 @@
               then ""
               else cfg.terminalConfig
             }
-              EOF
+            EOF
             fi;
           '';
         };
