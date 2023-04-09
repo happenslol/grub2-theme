@@ -76,7 +76,7 @@
             resolution = mkOption {
               default = "1920x1080";
               example = "2560x1440";
-              type = types.string;
+              type = types.str;
               description = ''
                 The screen resolution to use for grub2.
               '';
@@ -84,7 +84,7 @@
             bootMenuConfig = mkOption {
               default = null;
               example = "left = 30%";
-              type = types.nullOr types.string;
+              type = types.nullOr types.str;
               description = ''
                 Grub theme definition for boot_menu.
                 Refer to config/theme-*.txt for reference.
@@ -93,7 +93,7 @@
             terminalConfig = mkOption {
               default = null;
               example = "terminal-font: \"Terminus Regular 18\"";
-              type = types.nullOr types.string;
+              type = types.nullOr types.str;
               description = ''
                 Replaces grub theme definition for terminial-*.
                 Refer to config/theme-*.txt for reference.
