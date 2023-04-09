@@ -105,7 +105,7 @@
           {
             environment.systemPackages = [grub2-theme];
             boot.loader.grub = {
-              theme = "${grub2-theme}/grub/themes/${cfg.theme}";
+              theme = "${grub2-theme}/grub/themes/g2theme";
               gfxmodeEfi = "${cfg.resolution},auto";
               gfxmodeBios = "${cfg.resolution},auto";
               extraConfig = ''
