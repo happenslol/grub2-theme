@@ -38,6 +38,7 @@
 
             cp -a assets/assets-${cfg.icon}/icons-2k $out/icons
             cp -a assets/assets-select/select-2k/*.png $out
+            cp -a assets/background.png $out
 
             if [ ${pkgs.lib.trivial.boolToString hasBootMenuConfig} == "true" ]; then
               sed -i ':again;$!N;$!b again; s/\+ boot_menu {[^}]*}//g' $out/theme.txt
@@ -108,6 +109,8 @@
             environment.systemPackages = [grub2-theme];
             boot.loader.grub = {
               theme = "${grub2-theme}";
+              splashImage = "${grub2-theme}/background.png";
+              splashMode = "stretch";
               gfxmodeEfi = "${cfg.resolution},auto";
               gfxmodeBios = "${cfg.resolution},auto";
               extraConfig = ''
